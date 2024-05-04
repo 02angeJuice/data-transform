@@ -7,8 +7,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async findAll() {
-    const res = await this.usersService.findAll();
+  async getUsers() {
+    const res = await this.usersService.getUsers();
     return res;
   }
 
@@ -16,7 +16,7 @@ export class UsersController {
   async getDepartmentSummary(): Promise<{
     [department: string]: DepartmentSummaryDto;
   }> {
-    const summary = await this.usersService.department();
+    const summary = await this.usersService.getDepartmentSummary();
     return summary;
   }
 }

@@ -32,6 +32,14 @@ export class UsersService {
         departmentSummary[department].female++;
       }
 
+      // Calculate age range per department
+      const departmentUsers = data.filter(
+        (u) => u.company.department === department,
+      );
+      const minAge = Math.min(...departmentUsers.map((u) => u.age));
+      const maxAge = Math.max(...departmentUsers.map((u) => u.age));
+      departmentSummary[department].ageRange = `${minAge}-${maxAge}`;
+
       // Hair color summary
       const hairColor = user.hair.color;
       departmentSummary[department].hair[hairColor] =
@@ -41,30 +49,23 @@ export class UsersService {
       const fullName = `${user.firstName}${user.lastName}`;
       departmentSummary[department].addressUser[fullName] =
         user.address.postalCode;
-
-      // Calculate age range if needed
-      // (you'll need to implement the logic for calculating age range)
     });
 
     return departmentSummary;
   }
 
-  async department() {
+  async getDepartmentSummary() {
     const users = await this.fetchData();
     const res = this.transformData(users);
     return res;
   }
 
-  async findAll(): Promise<any> {
+  async getUsers(): Promise<any> {
     try {
       const res = await this.fetchData();
       return res;
     } catch (error) {
       throw new HttpException('call error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
   }
 }
