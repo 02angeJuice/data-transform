@@ -13,7 +13,7 @@ export class UsersService {
     const departmentSummary: { [department: string]: DepartmentSummaryDto } =
       {};
 
-    data.forEach((user) => {
+    data?.forEach((user) => {
       const department = user.company.department;
       if (!departmentSummary[department]) {
         departmentSummary[department] = {
